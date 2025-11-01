@@ -5,7 +5,7 @@ resource "aws_key_pair" "my_key" {
   public_key = file("terra-key-ec2.pub ")
 
 }
-
+#security group (inbound rules)
 resource "aws_security_group" "allow_http" {
   name        = "allow_http_${var.environment}"
   description = "Allow HTTP inbound traffic"
@@ -32,6 +32,7 @@ resource "aws_security_group" "allow_http" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+#ec2 instance 
 resource "aws_instance" "devops_ec2" {
   ami           = var.ami_id
   instance_type = var.instance_type
@@ -44,3 +45,4 @@ resource "aws_instance" "devops_ec2" {
     Name = "DevOps-Automation-${var.environment}"
   }
 }
+#these changes were made from github directly through pull request
