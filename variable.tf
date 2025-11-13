@@ -1,38 +1,51 @@
-variable "aws_region" {
-  description = "AWS region"
+###########################
+# variable.tf
+###########################
+
+variable "region" {
+  description = "AWS region to deploy into"
   type        = string
   default     = "ap-south-1"
 }
 
-variable "ami_id" {
-  description = "Ubuntu 22.04 AMI ID"
+variable "artifact_bucket" {
+  description = "S3 bucket name where app.jar is stored"
   type        = string
-  default     = "ami-02d26659fd82cf299" # Ubuntu 22.04 AMI in ap-south-1
+  default     = "praveen-app-file"
+}
+
+variable "logs_bucket" {
+  description = "S3 bucket name where logs will be saved"
+  type        = string
+  default     = "latest-log-of-servers12"
+}
+
+variable "key_name" {
+  description = "EC2 keypair name to use for SSH"
+  type        = string
+  default     = "your-keypair-name" # replace in terraform.tfvars
+}
+
+variable "my_ip" {
+  description = "Your public IP in CIDR format to allow SSH (e.g. 1.2.3.4/32)"
+  type        = string
+  default     = "0.0.0.0/32"
+}
+
+variable "ami_id" {
+  description = "AMI id (Amazon Linux 2 recommended)"
+  type        = string
+  default     = "ami-0a0f1259dd1c90938" # ap-south-1 Amazon Linux 2 (example)
 }
 
 variable "instance_type" {
   description = "EC2 instance type"
   type        = string
-  default     = "t2.micro"
-
+  default     = "t3.micro"
 }
 
-variable "key_name" {
-  description = "Existing AWS key pair name"
+variable "health_check_path" {
+  description = "ALB health check path"
   type        = string
-  default = "terra-key"
-}
-
-
-
-variable "environment" {
-  description = "Deployment stage (dev/prod)"
-  type        = string
-  default     = "dev"
-}
-
-variable "vpc_id" {
-  description = "VPC ID for the instance"
-  type        = string
-  default     = "vpc-0fe7248d4329da7fe" #  your VPC ID
+  default     = "/"
 }
