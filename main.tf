@@ -110,17 +110,26 @@ resource "aws_iam_user_policy" "upload_policy" {
   policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
+      # Allow listing the artifact bucket
       {
+        Effect = "Allow",
+        Action = [
+          "s3:ListBucket"
+        ],
+        Resource = aws_s3_bucket.artifact.arn
+      },
+      # Allow uploading/overwriting objects inside the artifact bucket
+      {
+        Effect = "Allow",
         Action = [
           "s3:PutObject",
-          "s3:PutObjectAcl"
-        ],
-        Effect = "Allow",
+          "s3:PutObjectAcl"],
         Resource = "${aws_s3_bucket.artifact.arn}/*"
       }
     ]
   })
 }
+
 
 resource "aws_iam_access_key" "upload_user_key" {
   user = aws_iam_user.upload_user.name
@@ -194,14 +203,14 @@ resource "aws_lb_target_group" "tg" {
   vpc_id   = aws_vpc.main.id
 
   health_check {
-    path = "/"
+    path = "/hello"
     port = "80"
   }
 }
 
 resource "aws_lb_listener" "listener" {
   load_balancer_arn = aws_lb.app_lb.arn
-  port              = "80"
+  port              = 80
   protocol          = "HTTP"
 
   default_action {
@@ -253,7 +262,8 @@ resource "aws_autoscaling_group" "app_asg" {
   desired_capacity     = var.asg_desired
   min_size             = var.asg_min
   max_size             = var.asg_max
-  vpc_zone_identifier = aws_subnet.private[*].id
+  vpc_zone_identifier =   [aws_subnet.private[0].id,aws_subnet.private[1].id
+]
   health_check_type    = "ELB"
   health_check_grace_period = 120
 

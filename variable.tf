@@ -53,6 +53,12 @@ variable "region" {
 
 ############ Existing Assignment-2 Vars ############
 
-variable "artifact_bucket" {}
-variable "logs_bucket" {}
+variable "artifact_bucket" {
+  description = "S3 bucket name where GitHub will upload app.jar"
+  type        = string
+}
 
+variable "logs_bucket" {
+  description = "S3 bucket name where instances upload logs"
+  type        = string
+}
