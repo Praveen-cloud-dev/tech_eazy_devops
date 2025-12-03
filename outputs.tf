@@ -60,3 +60,5 @@ output "iam_instance_profile" {
 # output "memory_high_alarm" {
 #   value = aws_cloudwatch_metric_alarm.memory_high.alarm_name
 # }
+
+#output "cpu_low_alarm" {

@@ -34,3 +34,6 @@ alert_email = "pprasadpraveen03@gmail.com"
 # Region
 #################################
 region = "ap-south-1"
+
+
+#give values for the variables used in main.tf and cloudwatch_sns.tf
