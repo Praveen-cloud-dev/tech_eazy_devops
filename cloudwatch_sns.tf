@@ -79,4 +79,5 @@ resource "aws_cloudwatch_metric_alarm" "memory_high" {
     aws_sns_topic.alerts.arn
   ]
 }
+// IAM user for uploading artifacts to S3
 

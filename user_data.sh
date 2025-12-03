@@ -46,7 +46,7 @@ After=network.target
 Type=simple
 User=root
 WorkingDirectory=/opt/app
-ExecStart=/usr/bin/java -jar /opt/app/app.jar
+ExecStart=/usr/bin/java -Dlogging.file.name=/opt/app/app.log -jar /opt/app/app.jar
 Restart=on-failure
 RestartSec=5
 StandardOutput=append:/opt/app/app.log
